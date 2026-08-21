@@ -98,7 +98,7 @@ export default function Hero() {
         className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full pointer-events-none"
         style={{ background:"radial-gradient(circle, rgba(124,92,255,0.08), transparent)", filter:"blur(40px)" }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-16 w-full grid lg:grid-cols-2 gap-16 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-16 w-full grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
         {/* Left */}
         <div>
           <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.6 }}
@@ -172,10 +172,10 @@ export default function Hero() {
         </div>
 
         {/* Right — Floating Cards */}
-        <div className="hidden lg:flex items-center justify-center relative h-[520px]">
+        <div className="flex items-center justify-center relative h-[320px] lg:h-[520px]">
           {/* Orbit rings — perfectly centered */}
-          <div className="absolute w-[340px] h-[340px] rounded-full border border-white/6 pointer-events-none" />
-          <div className="absolute w-[220px] h-[220px] rounded-full border border-white/4 pointer-events-none" />
+          <div className="absolute w-[220px] h-[220px] lg:w-[340px] lg:h-[340px] rounded-full border border-white/6 pointer-events-none" />
+          <div className="absolute w-[140px] h-[140px] lg:w-[220px] lg:h-[220px] rounded-full border border-white/4 pointer-events-none" />
 
           {/* Center glow */}
           <div className="absolute w-64 h-64 rounded-full pointer-events-none"
@@ -198,17 +198,17 @@ export default function Hero() {
 
           {/* Cards placed using transform from center */}
           {[
-            { label:"Amazon Connect", sub:"Cloud Contact Center",  color:"#4F8CFF", emoji:"☁️",  delay:0,   x:0,    y:-200 },
-            { label:"Genesys Cloud",  sub:"CX Platform",           color:"#F59E0B", emoji:"🌐", delay:0.4, x:-210, y:-70  },
-            { label:"Bedrock",        sub:"Foundation Models",     color:"#7C5CFF", emoji:"🧠",  delay:0.8, x:210,  y:-70  },
-            { label:"Amazon Lex",     sub:"Conversational AI",     color:"#22D3EE", emoji:"🤖", delay:1.2, x:-140, y:150  },
-            { label:"AI Copilot",     sub:"Agent Assist",          color:"#22C55E", emoji:"⚡",  delay:1.6, x:140,  y:150  },
+            { label:"Amazon Connect", sub:"Cloud Contact Center",  color:"#4F8CFF", emoji:"☁️",  delay:0,   x:0,    y:-200, mx:0,    my:-130 },
+            { label:"Genesys Cloud",  sub:"CX Platform",           color:"#F59E0B", emoji:"🌐", delay:0.4, x:-210, y:-70,  mx:-130, my:-45  },
+            { label:"Bedrock",        sub:"Foundation Models",     color:"#7C5CFF", emoji:"🧠",  delay:0.8, x:210,  y:-70,  mx:130,  my:-45  },
+            { label:"Amazon Lex",     sub:"Conversational AI",     color:"#22D3EE", emoji:"🤖", delay:1.2, x:-140, y:150,  mx:-90,  my:100  },
+            { label:"AI Copilot",     sub:"Agent Assist",          color:"#22C55E", emoji:"⚡",  delay:1.6, x:140,  y:150,  mx:90,   my:100  },
           ].map((c, i) => (
             <motion.div key={c.label}
               initial={{ opacity:0, scale:0.6 }}
               animate={{ opacity:1, scale:1 }}
               transition={{ duration:0.5, delay:c.delay, type:"spring", stiffness:120 }}
-              style={{ position:"absolute", x:c.x, y:c.y }}
+              className="hidden lg:block" style={{ position:"absolute", x:c.x, y:c.y }}
             >
               <motion.div
                 animate={{ y:[0, -10, 0] }}
@@ -228,6 +228,22 @@ export default function Hero() {
               </motion.div>
             </motion.div>
           ))}
+          {/* Mobile cards — simple grid */}
+          <div className="lg:hidden flex flex-wrap justify-center gap-2 px-2">
+            {[
+              { label:"Amazon Connect", color:"#4F8CFF", emoji:"☁️" },
+              { label:"Genesys Cloud",  color:"#F59E0B", emoji:"🌐" },
+              { label:"Bedrock",        color:"#7C5CFF", emoji:"🧠" },
+              { label:"Amazon Lex",     color:"#22D3EE", emoji:"🤖" },
+              { label:"AI Copilot",     color:"#22C55E", emoji:"⚡" },
+            ].map((c) => (
+              <div key={c.label} className="glass-strong rounded-xl px-3 py-2 flex items-center gap-2"
+                style={{ border:`1px solid ${c.color}30` }}>
+                <span className="text-base">{c.emoji}</span>
+                <span className="text-xs font-semibold text-text">{c.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

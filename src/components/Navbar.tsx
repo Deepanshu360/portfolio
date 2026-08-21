@@ -17,7 +17,13 @@ export default function Navbar() {
 
   const go = (id: string) => {
     setOpen(false);
-    document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
+      const el = document.getElementById(id.toLowerCase());
+      if (!el) return;
+      const offset = 64;
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+    }, 50);
   };
 
   return (
