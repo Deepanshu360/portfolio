@@ -85,7 +85,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative flex items-start lg:items-center overflow-hidden min-h-screen"
+      className="relative flex items-start lg:items-center overflow-hidden lg:min-h-screen"
       style={{ background: "radial-gradient(ellipse at 55% 35%, rgba(79,140,255,0.13) 0%, transparent 55%), radial-gradient(ellipse at 15% 75%, rgba(124,92,255,0.1) 0%, transparent 50%), #050816" }}
     >
       <Particles />
@@ -231,7 +231,7 @@ export default function Hero() {
       </div>
 
       <motion.div animate={{ y:[0,8,0] }} transition={{ duration:2.5, repeat:Infinity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted z-10">
+        className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-muted z-10">
         <span className="text-xs tracking-widest uppercase">Scroll</span>
         <div className="w-px h-8 bg-gradient-to-b from-muted to-transparent" />
       </motion.div>
