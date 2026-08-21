@@ -85,7 +85,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative flex items-start lg:items-center overflow-hidden min-h-screen"
       style={{ background: "radial-gradient(ellipse at 55% 35%, rgba(79,140,255,0.13) 0%, transparent 55%), radial-gradient(ellipse at 15% 75%, rgba(124,92,255,0.1) 0%, transparent 50%), #050816" }}
     >
       <Particles />
@@ -98,7 +98,7 @@ export default function Hero() {
         className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full pointer-events-none"
         style={{ background:"radial-gradient(circle, rgba(124,92,255,0.08), transparent)", filter:"blur(40px)" }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-16 w-full grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-10 lg:pt-24 lg:pb-16 w-full grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
         {/* Left */}
         <div className="w-full">
           <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.6 }}
