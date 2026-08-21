@@ -100,7 +100,7 @@ export default function Hero() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-16 w-full grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
         {/* Left */}
-        <div>
+        <div className="w-full">
           <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.6 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-7"
             style={{ background:"rgba(34,197,94,0.08)", border:"1px solid rgba(34,197,94,0.25)" }}>
@@ -155,7 +155,7 @@ export default function Hero() {
             </motion.a>
           </motion.div>
 
-          <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.7 }} className="flex items-center gap-3">
+          <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.7 }} className="flex items-center gap-3 mb-8">
             {[
               { icon:Github, href:"https://github.com/Deepanshu360", label:"GitHub" },
               { icon:Linkedin, href:"https://linkedin.com/in/connectdeepanshu0711", label:"LinkedIn" },
@@ -169,67 +169,10 @@ export default function Hero() {
               </motion.a>
             ))}
           </motion.div>
-        </div>
 
-        {/* Right — Floating Cards */}
-        <div className="flex items-center justify-center relative h-[320px] lg:h-[520px]">
-          {/* Orbit rings — perfectly centered */}
-          <div className="absolute w-[220px] h-[220px] lg:w-[340px] lg:h-[340px] rounded-full border border-white/6 pointer-events-none" />
-          <div className="absolute w-[140px] h-[140px] lg:w-[220px] lg:h-[220px] rounded-full border border-white/4 pointer-events-none" />
-
-          {/* Center glow */}
-          <div className="absolute w-64 h-64 rounded-full pointer-events-none"
-            style={{ background:"radial-gradient(circle, rgba(79,140,255,0.15), transparent)", filter:"blur(30px)" }} />
-
-          {/* Center badge — perfectly centered */}
-          <motion.div
-            initial={{ opacity:0, scale:0 }}
-            animate={{ opacity:1, scale:1 }}
-            transition={{ delay:2.2, duration:0.6, type:"spring" }}
-            className="absolute glass-strong rounded-2xl px-5 py-4 text-center border border-white/12 z-10"
-          >
-            <div className="w-10 h-10 rounded-xl mx-auto mb-2 flex items-center justify-center text-xl"
-              style={{ background:"linear-gradient(135deg,rgba(79,140,255,0.3),rgba(124,92,255,0.3))", border:"1px solid rgba(79,140,255,0.4)" }}>
-              🎯
-            </div>
-            <p className="text-xs text-muted mb-0.5">Specialization</p>
-            <p className="text-sm font-bold gradient-text">AI Contact Center</p>
-          </motion.div>
-
-          {/* Cards placed using transform from center */}
-          {[
-            { label:"Amazon Connect", sub:"Cloud Contact Center",  color:"#4F8CFF", emoji:"☁️",  delay:0,   x:0,    y:-200, mx:0,    my:-130 },
-            { label:"Genesys Cloud",  sub:"CX Platform",           color:"#F59E0B", emoji:"🌐", delay:0.4, x:-210, y:-70,  mx:-130, my:-45  },
-            { label:"Bedrock",        sub:"Foundation Models",     color:"#7C5CFF", emoji:"🧠",  delay:0.8, x:210,  y:-70,  mx:130,  my:-45  },
-            { label:"Amazon Lex",     sub:"Conversational AI",     color:"#22D3EE", emoji:"🤖", delay:1.2, x:-140, y:150,  mx:-90,  my:100  },
-            { label:"AI Copilot",     sub:"Agent Assist",          color:"#22C55E", emoji:"⚡",  delay:1.6, x:140,  y:150,  mx:90,   my:100  },
-          ].map((c, i) => (
-            <motion.div key={c.label}
-              initial={{ opacity:0, scale:0.6 }}
-              animate={{ opacity:1, scale:1 }}
-              transition={{ duration:0.5, delay:c.delay, type:"spring", stiffness:120 }}
-              className="hidden lg:block" style={{ position:"absolute", x:c.x, y:c.y }}
-            >
-              <motion.div
-                animate={{ y:[0, -10, 0] }}
-                transition={{ duration:3.5+i*0.5, repeat:Infinity, ease:"easeInOut", delay:c.delay }}
-                whileHover={{ scale:1.08, zIndex:20 }}
-                className="glass-strong rounded-2xl px-4 py-3 flex items-center gap-3 cursor-default"
-                style={{ boxShadow:`0 0 20px ${c.color}20`, border:`1px solid ${c.color}25` }}
-              >
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0"
-                  style={{ background:`${c.color}20`, border:`1px solid ${c.color}50` }}>
-                  {c.emoji}
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-text whitespace-nowrap">{c.label}</p>
-                  <p className="text-xs text-muted">{c.sub}</p>
-                </div>
-              </motion.div>
-            </motion.div>
-          ))}
-          {/* Mobile cards — simple grid */}
-          <div className="lg:hidden flex flex-wrap justify-center gap-2 px-2">
+          {/* Mobile tech grid — only on small screens */}
+          <motion.div initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.9 }}
+            className="flex lg:hidden flex-wrap gap-2">
             {[
               { label:"Amazon Connect", color:"#4F8CFF", emoji:"☁️" },
               { label:"Genesys Cloud",  color:"#F59E0B", emoji:"🌐" },
@@ -238,12 +181,52 @@ export default function Hero() {
               { label:"AI Copilot",     color:"#22C55E", emoji:"⚡" },
             ].map((c) => (
               <div key={c.label} className="glass-strong rounded-xl px-3 py-2 flex items-center gap-2"
-                style={{ border:`1px solid ${c.color}30` }}>
-                <span className="text-base">{c.emoji}</span>
+                style={{ border:`1px solid ${c.color}35` }}>
+                <span className="text-sm">{c.emoji}</span>
                 <span className="text-xs font-semibold text-text">{c.label}</span>
               </div>
             ))}
-          </div>
+          </motion.div>
+        </div>
+
+        {/* Right — Desktop only orbit */}
+        <div className="hidden lg:flex items-center justify-center relative h-[520px]">
+          <div className="absolute w-[340px] h-[340px] rounded-full border border-white/6 pointer-events-none" />
+          <div className="absolute w-[220px] h-[220px] rounded-full border border-white/4 pointer-events-none" />
+          <div className="absolute w-64 h-64 rounded-full pointer-events-none"
+            style={{ background:"radial-gradient(circle, rgba(79,140,255,0.15), transparent)", filter:"blur(30px)" }} />
+          <motion.div initial={{ opacity:0, scale:0 }} animate={{ opacity:1, scale:1 }}
+            transition={{ delay:2.2, duration:0.6, type:"spring" }}
+            className="absolute glass-strong rounded-2xl px-5 py-4 text-center border border-white/12 z-10">
+            <div className="w-10 h-10 rounded-xl mx-auto mb-2 flex items-center justify-center text-xl"
+              style={{ background:"linear-gradient(135deg,rgba(79,140,255,0.3),rgba(124,92,255,0.3))", border:"1px solid rgba(79,140,255,0.4)" }}>🎯</div>
+            <p className="text-xs text-muted mb-0.5">Specialization</p>
+            <p className="text-sm font-bold gradient-text">AI Contact Center</p>
+          </motion.div>
+          {[
+            { label:"Amazon Connect", sub:"Cloud Contact Center", color:"#4F8CFF", emoji:"☁️",  delay:0,   x:0,    y:-200 },
+            { label:"Genesys Cloud",  sub:"CX Platform",          color:"#F59E0B", emoji:"🌐", delay:0.4, x:-210, y:-70  },
+            { label:"Bedrock",        sub:"Foundation Models",    color:"#7C5CFF", emoji:"🧠",  delay:0.8, x:210,  y:-70  },
+            { label:"Amazon Lex",     sub:"Conversational AI",    color:"#22D3EE", emoji:"🤖", delay:1.2, x:-140, y:150  },
+            { label:"AI Copilot",     sub:"Agent Assist",         color:"#22C55E", emoji:"⚡",  delay:1.6, x:140,  y:150  },
+          ].map((c, i) => (
+            <motion.div key={c.label} initial={{ opacity:0, scale:0.6 }} animate={{ opacity:1, scale:1 }}
+              transition={{ duration:0.5, delay:c.delay, type:"spring", stiffness:120 }}
+              style={{ position:"absolute", x:c.x, y:c.y }}>
+              <motion.div animate={{ y:[0,-10,0] }}
+                transition={{ duration:3.5+i*0.5, repeat:Infinity, ease:"easeInOut", delay:c.delay }}
+                whileHover={{ scale:1.08, zIndex:20 }}
+                className="glass-strong rounded-2xl px-4 py-3 flex items-center gap-3 cursor-default"
+                style={{ boxShadow:`0 0 20px ${c.color}20`, border:`1px solid ${c.color}25` }}>
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0"
+                  style={{ background:`${c.color}20`, border:`1px solid ${c.color}50` }}>{c.emoji}</div>
+                <div>
+                  <p className="text-sm font-semibold text-text whitespace-nowrap">{c.label}</p>
+                  <p className="text-xs text-muted">{c.sub}</p>
+                </div>
+              </motion.div>
+            </motion.div>
+          ))}
         </div>
       </div>
 
