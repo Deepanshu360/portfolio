@@ -80,23 +80,23 @@ export default function Architecture() {
           </p>
         </motion.div>
 
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center w-full">
           {nodes.map((node, i) => (
             <motion.div key={node.id}
               initial={{ opacity:0, scale:0.85 }}
               animate={inView?{opacity:1,scale:1}:{}}
               transition={{ duration:0.4, delay:i*0.07 }}
-              className="flex flex-col items-center">
+              className="flex flex-col items-center w-full max-w-sm">
               <motion.button
-                whileHover={{ scale:1.06, boxShadow:`0 0 35px ${node.color}50` }}
+                whileHover={{ scale:1.04, boxShadow:`0 0 35px ${node.color}50` }}
                 whileTap={{ scale:0.97 }}
                 onClick={() => setSel(node)}
-                className="glass border rounded-2xl px-7 py-3.5 flex items-center gap-3 cursor-pointer transition-all min-w-[260px] justify-center"
+                className="glass border rounded-2xl px-6 py-3.5 flex items-center gap-3 cursor-pointer transition-all w-full justify-center"
                 style={{ borderColor:`${node.color}35` }}>
-                <span className="text-xl">{node.icon}</span>
-                <span className="font-heading font-semibold text-text text-sm">{node.label}</span>
+                <span className="text-xl shrink-0">{node.icon}</span>
+                <span className="font-heading font-semibold text-text text-sm text-left flex-1">{node.label}</span>
                 <motion.div animate={{ opacity:[0.5,1,0.5] }} transition={{ duration:2, repeat:Infinity }}
-                  className="w-2 h-2 rounded-full ml-auto"
+                  className="w-2 h-2 rounded-full shrink-0"
                   style={{ background:node.color, boxShadow:`0 0 8px ${node.color}` }} />
               </motion.button>
               {i < nodes.length - 1 && (
@@ -111,41 +111,104 @@ export default function Architecture() {
         </div>
       </div>
 
-      {/* Side Panel */}
+      {/* Overlay + Panel */}
       <AnimatePresence>
         {sel && (
           <>
-            <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
-              className="fixed inset-0 bg-black/65 backdrop-blur-sm z-40" onClick={() => setSel(null)} />
+            {/* Backdrop */}
             <motion.div
-              initial={{ x:"100%", opacity:0 }} animate={{ x:0, opacity:1 }} exit={{ x:"100%", opacity:0 }}
+              initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[997]"
+              onClick={() => setSel(null)}
+            />
+
+            {/* Desktop: right drawer | Mobile: bottom sheet */}
+            <motion.div
+              initial={{ x:"100%" }}
+              animate={{ x:0 }}
+              exit={{ x:"100%" }}
               transition={{ type:"spring", damping:28, stiffness:220 }}
-              className="fixed right-0 top-0 h-full w-full max-w-md glass border-l border-white/10 z-50 overflow-y-auto p-8">
-              <div className="flex items-center justify-between mb-7">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
+              className="fixed right-0 top-16 bottom-0 w-full max-w-[420px] glass border-l border-white/10 z-[998] flex flex-col max-md:hidden"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 py-4 border-b border-white/8 shrink-0">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0"
                     style={{ background:`${sel.color}20`, border:`1px solid ${sel.color}40` }}>
                     {sel.icon}
                   </div>
-                  <h3 className="text-lg font-heading font-bold text-text">{sel.label}</h3>
+                  <h3 className="text-base font-heading font-bold text-text leading-tight truncate">{sel.label}</h3>
                 </div>
-                <button onClick={() => setSel(null)}
-                  className="w-8 h-8 rounded-lg glass border border-white/10 flex items-center justify-center text-muted hover:text-text">
-                  <X size={15} />
+                <button
+                  onClick={() => setSel(null)}
+                  className="w-9 h-9 rounded-xl glass border border-white/15 flex items-center justify-center text-muted hover:text-text hover:border-white/30 transition-all shrink-0 ml-4"
+                  aria-label="Close panel"
+                >
+                  <X size={16} />
                 </button>
               </div>
-              {[
-                { title:"Purpose", content:sel.purpose },
-                { title:"Architecture", content:sel.architecture },
-                { title:"Implementation", content:sel.implementation },
-                { title:"Data Flow", content:sel.dataflow },
-                { title:"Business Impact", content:sel.impact },
-              ].map((item) => (
-                <div key={item.title} className="mb-5 pb-5 border-b border-white/6 last:border-0">
-                  <h4 className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color:sel.color }}>{item.title}</h4>
-                  <p className="text-sm text-muted leading-relaxed">{item.content}</p>
+              {/* Body */}
+              <div className="overflow-y-auto flex-1 p-6 pt-5">
+                {[
+                  { title:"Purpose", content:sel.purpose },
+                  { title:"Architecture", content:sel.architecture },
+                  { title:"Implementation", content:sel.implementation },
+                  { title:"Data Flow", content:sel.dataflow },
+                  { title:"Business Impact", content:sel.impact },
+                ].map((item) => (
+                  <div key={item.title} className="mb-5 pb-5 border-b border-white/6 last:border-0 last:mb-0 last:pb-0">
+                    <h4 className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color:sel.color }}>{item.title}</h4>
+                    <p className="text-sm text-muted leading-relaxed">{item.content}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Mobile bottom sheet */}
+            <motion.div
+              initial={{ y:"100%" }}
+              animate={{ y:0 }}
+              exit={{ y:"100%" }}
+              transition={{ type:"spring", damping:28, stiffness:220 }}
+              className="fixed bottom-0 left-0 right-0 glass border-t border-white/10 z-[998] flex flex-col rounded-t-3xl md:hidden"
+              style={{ maxHeight:"82vh" }}
+            >
+              {/* Drag handle */}
+              <div className="flex justify-center pt-3 pb-1 shrink-0">
+                <div className="w-10 h-1 rounded-full bg-white/20" />
+              </div>
+              {/* Header */}
+              <div className="flex items-center justify-between px-5 py-3 border-b border-white/8 shrink-0">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0"
+                    style={{ background:`${sel.color}20`, border:`1px solid ${sel.color}40` }}>
+                    {sel.icon}
+                  </div>
+                  <h3 className="text-sm font-heading font-bold text-text leading-tight">{sel.label}</h3>
                 </div>
-              ))}
+                <button
+                  onClick={() => setSel(null)}
+                  className="w-9 h-9 rounded-xl glass border border-white/15 flex items-center justify-center text-muted hover:text-text transition-all shrink-0 ml-3"
+                  aria-label="Close panel"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+              {/* Body */}
+              <div className="overflow-y-auto flex-1 px-5 py-4">
+                {[
+                  { title:"Purpose", content:sel.purpose },
+                  { title:"Architecture", content:sel.architecture },
+                  { title:"Implementation", content:sel.implementation },
+                  { title:"Data Flow", content:sel.dataflow },
+                  { title:"Business Impact", content:sel.impact },
+                ].map((item) => (
+                  <div key={item.title} className="mb-4 pb-4 border-b border-white/6 last:border-0 last:mb-0 last:pb-0">
+                    <h4 className="text-xs font-semibold uppercase tracking-widest mb-1.5" style={{ color:sel.color }}>{item.title}</h4>
+                    <p className="text-sm text-muted leading-relaxed">{item.content}</p>
+                  </div>
+                ))}
+              </div>
             </motion.div>
           </>
         )}
